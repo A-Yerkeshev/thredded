@@ -48,9 +48,11 @@ class CreateThredded < Thredded::BaseMigration
       t.integer :position, null: false
       t.references :last_topic, index: false
       t.references :messageboard_group, index: false
+      t.references :forum, index: false
       t.timestamps null: false
       t.boolean :locked, null: false, default: false
       t.index [:messageboard_group_id], name: :index_thredded_messageboards_on_messageboard_group_id
+      t.index [:forum_id], name: :index_thredded_messageboards_on_forum_id
       t.index [:slug],
               name: :index_thredded_messageboards_on_slug,
               unique: true,
@@ -207,10 +209,15 @@ class CreateThredded < Thredded::BaseMigration
     add_index :thredded_user_topic_read_states, %i[user_id messageboard_id],
               name: :thredded_user_topic_read_states_user_messageboard
 
+    create_table :thredded_forums do |t|
+    end
+
     create_table :thredded_messageboard_groups do |t|
       t.string :name
       t.integer :position, null: false
       t.timestamps null: false
+      t.references :forum, index: false
+      t.index [:forum_id], name: :index_thredded_messageboard_groups_on_forum_id
     end
 
     create_table :thredded_user_topic_follows do |t|
