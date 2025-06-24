@@ -23,6 +23,8 @@ module Thredded
       :thredded_signed_in?,
       :thredded_moderator?
 
+    before_action :set_forum
+
     rescue_from Thredded::Errors::MessageboardNotFound,
                 Thredded::Errors::PrivateTopicNotFound,
                 Thredded::Errors::PrivatePostNotFound,
@@ -191,6 +193,10 @@ module Thredded
     def thredded_require_moderator!
       return if thredded_moderator?
       fail Pundit::NotAuthorizedError, 'You are not authorized to perform this action.'
+    end
+
+    def set_forum
+      @forum = Thredded::Forum.find!(params[:forum_id])
     end
   end
 end

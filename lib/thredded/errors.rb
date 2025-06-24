@@ -76,5 +76,11 @@ module Thredded
         I18n.t('thredded.errors.private_topic_create_denied')
       end
     end
+
+    class ForumNotFound < Thredded::Error
+      def message
+        I18n.t('thredded.errors.forum_not_found')
+      end
+    end
   end
 end
