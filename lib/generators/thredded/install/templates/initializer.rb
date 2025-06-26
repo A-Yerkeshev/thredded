@@ -47,6 +47,9 @@ Thredded.content_visible_while_pending_moderation = true
 # This model can be customized further by overriding a handful of methods on the User model.
 # For more information, see app/models/thredded/user_extender.rb.
 
+# Whether there is more than one forum in the application.
+# Thredded.multitenant = true
+
 # ==> UI configuration
 
 # How to calculate the position of messageboards in a list:

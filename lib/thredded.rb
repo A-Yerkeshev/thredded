@@ -172,6 +172,9 @@ module Thredded # rubocop:disable Metrics/ModuleLength
     # @return [Range<Integer>] The range of valid topic title lengths.
     attr_accessor :topic_title_length_range
 
+    # @return [Boolean] Whether there is more than one forum in the application.
+    attr_accessor :multitenant
+
     # @return [Array] The notifiers, by default just the EmailNotifier
     def notifiers
       @notifiers ||= [Thredded::EmailNotifier.new]
@@ -277,4 +280,6 @@ module Thredded # rubocop:disable Metrics/ModuleLength
 
   self.messageboard_name_length_range = (1..60)
   self.topic_title_length_range = (1..200)
+
+  self.multitenant = false
 end
