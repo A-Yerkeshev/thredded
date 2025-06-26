@@ -41,6 +41,7 @@ fr:
             Pour vous désabonner de ces courriels, mettez à jour vos préférences ici:
             %{unsubscribe_url}
     errors:
+      forum_not_found: Le forum avec l'identifiant donné n'existe pas.
       login_required: Veuillez vous connecter
       not_authorized: Vous n'êtes pas autorisé à accéder à cette page.
       post_not_found: Ce post n'existe pas.

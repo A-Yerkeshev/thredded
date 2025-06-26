@@ -38,6 +38,7 @@ zh-CN:
             退订这些邮件，请前往设置：
             %{unsubscribe_url}
     errors:
+      forum_not_found: 指定ID的论坛不存在。
       login_required: 请先登录
       not_authorized: 你没有权限访问该页面
       post_not_found: 这篇文章不存在。

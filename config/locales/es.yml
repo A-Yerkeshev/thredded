@@ -43,6 +43,7 @@ es:
             Para anular la suscripción de estos correos electrónicos, actualice sus preferencias aquí:
             %{unsubscribe_url}
     errors:
+      forum_not_found: El foro con el ID proporcionado no existe.
       login_required: Por favor, inicia sesión.
       not_authorized: No estás autorizado para ver esta página.
       post_not_found: Esta publicación no existe.

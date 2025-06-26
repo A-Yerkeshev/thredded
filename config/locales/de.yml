@@ -42,6 +42,7 @@ de:
             Um keine weiteren E-Mails zu erhalten, ändern Sie hier ihre Benachrichtigungseinstellungen:
             %{unsubscribe_url}
     errors:
+      forum_not_found: Forum mit der angegebenen ID existiert nicht.
       login_required: Bitte zuerst anmelden
       not_authorized: Du hast keinen Zugriff auf diese Seite
       post_not_found: Dieser Beitrag existiert nicht.

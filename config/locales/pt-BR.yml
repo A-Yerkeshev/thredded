@@ -42,6 +42,7 @@ pt-BR:
             Para cancelar a inscrição desses e-mails, atualize suas preferências aqui:
             %{unsubscribe_url}
     errors:
+      forum_not_found: O fórum com o ID fornecido não existe.
       login_required: Por favor, autentique-se primeiro.
       not_authorized: Você não está autorizado a acessar esta página.
       post_not_found: Este post não existe.

@@ -41,6 +41,7 @@ en:
             To unsubscribe from these emails, update your preferences here:
             %{unsubscribe_url}
     errors:
+      forum_not_found: Forum with the given ID does not exist.
       login_required: Please sign in first.
       not_authorized: You are not authorized to access this page.
       post_not_found: This post does not exist.

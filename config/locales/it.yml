@@ -41,6 +41,7 @@ it:
             Per non riceve più queste email, aggiorna qui le tue preferenze:
             %{unsubscribe_url}
     errors:
+      forum_not_found: Il forum con l'ID fornito non esiste.
       login_required: Per visualizzare questa pagina bisogna accedere tramite login.
       not_authorized: Non sei autorizzato a vedere questa pagina.
       post_not_found: Questo post non esiste.

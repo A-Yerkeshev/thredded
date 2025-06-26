@@ -41,6 +41,7 @@ pl:
             Aby wypisać się z tych e-maili, zaktualizuj swoje preferencje:
             %{unsubscribe_url}
     errors:
+      forum_not_found: Forum o podanym identyfikatorze nie istnieje.
       login_required: Proszę się najpierw zalogować.
       not_authorized: Nie masz uprawnień aby zobaczyć tę stronę.
       post_not_found: Ten wpis nie istnieje.
