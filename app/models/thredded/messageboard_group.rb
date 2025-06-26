@@ -7,7 +7,9 @@ module Thredded
              foreign_key: :messageboard_group_id,
              dependent: :nullify
 
-    belongs_to :forum, inverse_of: :groups
+    belongs_to :forum,
+               inverse_of: :groups,
+               optional: !Thredded.multitenant
 
     scope :ordered, -> { order(position: :asc, id: :asc) }
     validates :name,

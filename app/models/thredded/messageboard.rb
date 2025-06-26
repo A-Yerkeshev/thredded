@@ -67,7 +67,9 @@ module Thredded
                class_name: 'Thredded::MessageboardGroup',
                optional: true
 
-    belongs_to :forum, inverse_of: :messageboards
+    belongs_to :forum,
+               inverse_of: :messageboards,
+               optional: !Thredded.multitenant
 
     has_many :post_moderation_records, inverse_of: :messageboard, dependent: :delete_all
     scope :top_level_messageboards, -> { where(group: nil) }
