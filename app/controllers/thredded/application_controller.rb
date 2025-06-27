@@ -196,7 +196,9 @@ module Thredded
     end
 
     def set_forum
-      @forum = Thredded::Forum.find!(params[:forum_id])
+      id = params[:forum_id] || session[:forum_id]
+      @forum = Thredded::Forum.find!(id)
+      session[:forum_id] = @forum.id
     end
   end
 end
