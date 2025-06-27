@@ -5,7 +5,11 @@ module Thredded
     extend ActiveSupport::Concern
 
     included do
-      has_many :forums
+      has_one :forum,
+      as: :forum_owner,
+      class_name: 'Thredded::Forum',
+      inverse_of: :forum_owner,
+      dependent: :destroy
     end
   end
 end

@@ -2,6 +2,10 @@
 
 module Thredded
   class Forum < ActiveRecord::Base
+    belongs_to :forum_owner,
+               polymorphic: true,
+               optional: true
+
     has_many :messageboard_groups,
              inverse_of: :forum,
              dependent: :destroy

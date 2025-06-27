@@ -210,7 +210,11 @@ class CreateThredded < Thredded::BaseMigration
               name: :thredded_user_topic_read_states_user_messageboard
 
     create_table :thredded_forums do |t|
+      t.string :forum_owner_type
+      t.bigint :forum_owner_id
+      t.timestamps null: false
     end
+    add_index :thredded_forums, [:forum_owner_type, :forum_owner_id]
 
     create_table :thredded_messageboard_groups do |t|
       t.string :name
