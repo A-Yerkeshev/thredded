@@ -8,8 +8,12 @@ module Thredded
     after_action :verify_policy_scoped, except: %i[new create edit update destroy]
 
     def index
+      messageboards = Thredded.multitenant ?
+        Thredded::Messageboard.where(forum_id: @forum.id) :
+        Thredded::Messageboard.all
+
       @groups = Thredded::MessageboardGroupView.grouped(
-        policy_scope(Thredded::Messageboard.all),
+        policy_scope(messageboards),
         user: thredded_current_user
       )
     end
