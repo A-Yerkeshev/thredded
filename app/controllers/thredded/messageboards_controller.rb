@@ -26,6 +26,7 @@ module Thredded
     def create
       @new_messageboard = Thredded::Messageboard.new(messageboard_params)
       authorize_creating @new_messageboard
+      @new_messageboard.forum = @forum if Thredded.multitenant
       if Thredded::CreateMessageboard.new(@new_messageboard, thredded_current_user).run
         redirect_to root_path
       else
