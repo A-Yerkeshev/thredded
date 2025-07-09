@@ -2,9 +2,10 @@
 
 module Thredded
   class Forum < ActiveRecord::Base
-    belongs_to :forum_owner,
-               polymorphic: true,
-               optional: true
+    has_many :forum_ownerships,
+             class_name: 'Thredded::ForumOwnership',
+             dependent: :destroy,
+             inverse_of: :forum
 
     has_many :messageboard_groups,
              inverse_of: :forum,
@@ -20,6 +21,12 @@ module Thredded
     # @raise [Thredded::Errors::ForumNotFound] if forum with the given ID does not exist.
     def self.find!(id)
       find_by(id: id) || fail(Thredded::Errors::ForumNotFound)
+    end
+
+    # Returns array of forum's owners
+    # @return [Array<ForumOwner>]
+    def owners
+      forum_ownerships.includes(:forum_owner).map(&:forum_owner)
     end
   end
 end

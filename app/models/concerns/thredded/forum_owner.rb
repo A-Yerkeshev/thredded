@@ -5,11 +5,17 @@ module Thredded
     extend ActiveSupport::Concern
 
     included do
-      has_one :forum,
-      as: :forum_owner,
-      class_name: 'Thredded::Forum',
-      inverse_of: :forum_owner,
-      dependent: :destroy
+      has_many :forum_ownerships,
+               as: :forum_owner,
+               class_name: 'Thredded::ForumOwnership',
+               dependent: :destroy,
+               inverse_of: :forum_owner
+
+      # Returns array of owned forums
+      # @return [Array<Forum>]
+      def forums
+        forum_ownerships.includes(:forum).map(&:forum)
+      end
     end
   end
 end

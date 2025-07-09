@@ -40,11 +40,17 @@ class CreateThredded < Thredded::BaseMigration
                                             **(max_key_length ? { length: max_key_length } : {})
 
     create_table :thredded_forums do |t|
-      t.string :forum_owner_type
-      t.bigint :forum_owner_id
       t.timestamps null: false
     end
-    add_index :thredded_forums, [:forum_owner_type, :forum_owner_id]
+
+    create_table :thredded_forum_ownerships do |t|
+      t.references :forum, null: false, foreign_key: { to_table: :thredded_forums }, index: false
+      t.references :forum_owner, polymorphic: true, null: false, index: false
+      t.timestamps null: false
+      t.index [:forum_id, :forum_owner_type, :forum_owner_id], unique: true, name: "index_ownerships_on_forum_and_owner"
+      t.index [:forum_owner_type, :forum_owner_id], name: "index_ownerships_on_owner"
+      t.index :forum_id, name: "index_ownerships_on_forum"
+    end
 
     create_table :thredded_messageboards do |t|
       t.text :name, null: false
