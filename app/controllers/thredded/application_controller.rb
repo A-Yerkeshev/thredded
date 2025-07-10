@@ -23,7 +23,10 @@ module Thredded
       :thredded_signed_in?,
       :thredded_moderator?
 
-    before_action :set_forum if Thredded.multitenant
+    if Thredded.multitenant
+      before_action { thredded_require_login! }
+      before_action :set_forum
+    end
 
     rescue_from Thredded::Errors::MessageboardNotFound,
                 Thredded::Errors::PrivateTopicNotFound,
