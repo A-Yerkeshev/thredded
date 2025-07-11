@@ -188,6 +188,18 @@ class CreateThredded < Thredded::BaseMigration
     add_foreign_key :thredded_messageboard_users, :thredded_messageboards,
                     column: :thredded_messageboard_id, on_delete: :cascade
 
+    create_table :thredded_forum_users do |t|
+      t.references :thredded_user_detail, null: false, index: false
+      t.references :thredded_forum, null: false, index: false
+      t.index %i[thredded_forum_id thredded_user_detail_id],
+              name: :index_thredded_forum_users,
+              unique: true
+    end
+    add_foreign_key :thredded_forum_users, :thredded_user_details,
+                    column: :thredded_user_detail_id, on_delete: :cascade
+    add_foreign_key :thredded_forum_users, :thredded_forums,
+                    column: :thredded_forum_id, on_delete: :cascade
+
     create_table :thredded_user_preferences do |t|
       t.references :user, type: user_id_type, null: false, index: false
       t.boolean :follow_topics_on_mention, default: true, null: false

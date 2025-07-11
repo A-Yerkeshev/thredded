@@ -15,6 +15,11 @@ module Thredded
              inverse_of: :forum,
              dependent: :destroy
 
+    has_many :forum_users,
+             inverse_of:  :forum,
+             foreign_key: :thredded_forum_id,
+             dependent: :destroy
+
     # Finds forum by ID, or raises {Thredded::Errors::ForumNotFound}.
     # @param id [String, Number]
     # @return [Thredded::Forum]

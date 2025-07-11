@@ -3,10 +3,13 @@
 module Thredded
   # The state of a user with regards to a forum. Used to control which users can access which forums.
   class ForumUser < ActiveRecord::Base
-    belongs_to :forum, inverse_of: :forum_users
-    validates :forum_id, presence: true
-
-    belongs_to :user, class_name: Thredded.user_class_name, inverse_of: :forum_users
-    validates :user_id, presence: true
+    belongs_to :forum,
+               class_name:  'Thredded::Forum',
+               foreign_key: :thredded_forum_id,
+               inverse_of:  :forum_users
+    belongs_to :user_detail,
+               class_name: 'Thredded::UserDetail',
+               foreign_key: :thredded_user_detail_id,
+               inverse_of: :forum_users
   end
 end

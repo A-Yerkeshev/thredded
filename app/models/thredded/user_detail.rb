@@ -22,6 +22,12 @@ module Thredded
              inverse_of: :user_detail,
              dependent: :delete_all
 
+    has_many :forum_users,
+             class_name: 'Thredded::ForumUser',
+             foreign_key: :thredded_user_detail_id,
+             inverse_of: :user_detail,
+             dependent: :delete_all
+
     scope :recently_active, -> { where(arel_table[:last_seen_at].gt(Thredded.active_user_threshold.ago)) }
 
     before_save :set_moderation_state_changed_at
