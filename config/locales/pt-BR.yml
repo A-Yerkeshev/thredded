@@ -42,13 +42,19 @@ pt-BR:
             Para cancelar a inscrição desses e-mails, atualize suas preferências aqui:
             %{unsubscribe_url}
     errors:
+      database_empty: Popule o banco de dados com "rake db:seed"
       login_required: Por favor, autentique-se primeiro.
+      messageboard_create_denied: Você não tem autorização para criar um novo fórum.
+      messageboard_not_found: Este fórum não existe.
+      messageboard_read_denied: Você não tem autorização para acessar este fórum.
       not_authorized: Você não está autorizado a acessar esta página.
       post_not_found: Este post não existe.
       private_post_not_found: Esta mensagem privada não existe.
       private_topic_create_denied: Você não está autorizado a criar tópicos privados.
       private_topic_not_found: Este tópico privado não existe.
+      topic_create_denied: Você não tem autorização para postar neste fórum.
       topic_not_found: Este tópico não existe.
+      user_not_found: Não foi possível encontrar este usuário. O nome está digitado corretamente?
     form:
       create_btn_submitting: Criando...
       preview: Pré-visualização

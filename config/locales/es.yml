@@ -43,13 +43,19 @@ es:
             Para anular la suscripción de estos correos electrónicos, actualice sus preferencias aquí:
             %{unsubscribe_url}
     errors:
+      database_empty: Llena la base de datos con "rake db:seed"
       login_required: Por favor, inicia sesión.
+      messageboard_create_denied: No estás autorizado para crear un nuevo foro.
+      messageboard_not_found: Este foro no existe.
+      messageboard_read_denied: No estás autorizado para acceder a este foro.
       not_authorized: No estás autorizado para ver esta página.
       post_not_found: Esta publicación no existe.
       private_post_not_found: Este mensaje privado no existe.
       private_topic_create_denied: No estás autorizado para crear temas privados.
       private_topic_not_found: Este tema privado no existe.
+      topic_create_denied: No estás autorizado para publicar en este foro.
       topic_not_found: Este tema no existe.
+      user_not_found: No se pudo encontrar a este usuario. ¿Está mal escrito el nombre?
     form:
       create_btn_submitting: Creando...
       preview: Vista previa

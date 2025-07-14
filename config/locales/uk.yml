@@ -42,13 +42,19 @@ uk:
             Щоб відписатися від цих електронних листів, оновіть свої налаштування тут:
             %{unsubscribe_url}
     errors:
+      database_empty: Заповніть базу даних за допомогою "rake db:seed"
       login_required: Будь ласка, увійдіть спочатку.
+      messageboard_create_denied: У вас немає дозволу на створення нового форуму.
+      messageboard_not_found: Цей форум не існує.
+      messageboard_read_denied: У вас немає доступу до цього форуму.
       not_authorized: Ви не маєте дозволу на доступ до цієї сторінки.
       post_not_found: Цей допис не існує.
       private_post_not_found: Це приватне повідомлення не існує.
       private_topic_create_denied: Ви не маєте дозволу на створення приватних тем.
       private_topic_not_found: Ця приватна тема не існує.
+      topic_create_denied: У вас немає дозволу на публікацію на цьому форумі.
       topic_not_found: Ця тема не існує.
+      user_not_found: Користувача не знайдено. Можливо, ім’я написано з помилкою?
     form:
       create_btn_submitting: Створення...
       preview: Попередній перегляд

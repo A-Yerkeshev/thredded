@@ -41,13 +41,19 @@ it:
             Per non riceve più queste email, aggiorna qui le tue preferenze:
             %{unsubscribe_url}
     errors:
+      database_empty: Popola il database con "rake db:seed"
       login_required: Per visualizzare questa pagina bisogna accedere tramite login.
+      messageboard_create_denied: Non sei autorizzato a creare un nuovo forum.
+      messageboard_not_found: Questo forum non esiste.
+      messageboard_read_denied: Non sei autorizzato ad accedere a questo forum.
       not_authorized: Non sei autorizzato a vedere questa pagina.
       post_not_found: Questo post non esiste.
       private_post_not_found: Questo messaggio privato non esiste.
       private_topic_create_denied: Non sei autorizzato a creare discussioni private.
       private_topic_not_found: Questa discussione privata non esiste.
+      topic_create_denied: Non sei autorizzato a pubblicare in questo forum.
       topic_not_found: Questo argomento non esiste.
+      user_not_found: Questo utente non è stato trovato. Il nome è scritto correttamente?
     form:
       create_btn_submitting: Creazione in corso...
       preview: Anteprima

@@ -38,13 +38,19 @@ zh-CN:
             退订这些邮件，请前往设置：
             %{unsubscribe_url}
     errors:
+      database_empty: 使用 "rake db:seed" 填充数据库
       login_required: 请先登录
+      messageboard_create_denied: 您没有权限创建新论坛。
+      messageboard_not_found: 此论坛不存在。
+      messageboard_read_denied: 您没有权限访问此论坛。
       not_authorized: 你没有权限访问该页面
       post_not_found: 这篇文章不存在。
       private_post_not_found: 此私人消息不存在。
       private_topic_create_denied: 你没有权限创建私人对话
       private_topic_not_found: 该私人对话不存在
+      topic_create_denied: 您没有权限在此论坛发帖。
       topic_not_found: 此主题不存在。
+      user_not_found: 未找到该用户。名字是否拼写正确？
     form:
       create_btn_submitting: 创建中...
       preview: 预览
