@@ -41,13 +41,19 @@ en:
             To unsubscribe from these emails, update your preferences here:
             %{unsubscribe_url}
     errors:
+      database_empty: Seed the database with "rake db:seed".
       login_required: Please sign in first.
+      messageboard_create_denied: You are not authorized to create a new messageboard.
+      messageboard_not_found: This messageboard does not exist.
+      messageboard_read_denied: You are not authorized to access this messageboard.
       not_authorized: You are not authorized to access this page.
       post_not_found: This post does not exist.
       private_post_not_found: This private message does not exist.
       private_topic_create_denied: You are not authorized to create private topics.
       private_topic_not_found: This private topic does not exist.
+      topic_create_denied: You are not authorized to post in this messageboard.
       topic_not_found: This topic does not exist.
+      user_not_found: This user could not be found. Is their name misspelled?
     form:
       create_btn_submitting: Creating...
       preview: Preview
