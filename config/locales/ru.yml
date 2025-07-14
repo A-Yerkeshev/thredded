@@ -40,13 +40,19 @@ ru:
             Чтобы отписаться от этих писем, обновите свои настройки здесь:
             %{unsubscribe_url}
     errors:
+      database_empty: Заполните базу данных командой "rake db:seed"
       login_required: Необходимо зайти на форум.
+      messageboard_create_denied: У вас нет прав на создание нового форума.
+      messageboard_not_found: Этот форум не существует.
+      messageboard_read_denied: У вас нет доступа к этому форуму.
       not_authorized: Вы не авторизованы.
       post_not_found: Это сообщение не существует.
       private_post_not_found: Это личное сообщение не существует.
       private_topic_create_denied: Вы не авторизованы для создания личных сообщений.
       private_topic_not_found: Личное сообщение не найдено.
+      topic_create_denied: У вас нет прав на публикацию на этом форуме.
       topic_not_found: Эта тема не существует.
+      user_not_found: Пользователь не найден. Возможно, имя указано с ошибкой?
     form:
       create_btn_submitting: Создаю...
       preview: Обзор

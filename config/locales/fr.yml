@@ -41,13 +41,19 @@ fr:
             Pour vous désabonner de ces courriels, mettez à jour vos préférences ici:
             %{unsubscribe_url}
     errors:
+      database_empty: Remplissez la base de données avec "rake db:seed"
       login_required: Veuillez vous connecter
+      messageboard_create_denied: Vous n'êtes pas autorisé à créer un nouveau forum.
+      messageboard_not_found: Ce forum n'existe pas.
+      messageboard_read_denied: Vous n'êtes pas autorisé à accéder à ce forum.
       not_authorized: Vous n'êtes pas autorisé à accéder à cette page.
       post_not_found: Ce post n'existe pas.
       private_post_not_found: Ce message privé n'existe pas.
       private_topic_create_denied: Vous n'êtes pas autorisé à créer des sujets.
       private_topic_not_found: Ce sujet privé n'existe pas.
+      topic_create_denied: Vous n'êtes pas autorisé à publier dans ce forum.
       topic_not_found: Ce sujet n'existe pas.
+      user_not_found: Cet utilisateur est introuvable. Son nom est-il mal orthographié ?
     form:
       create_btn_submitting: Création en cours...
       preview: Aperçu
