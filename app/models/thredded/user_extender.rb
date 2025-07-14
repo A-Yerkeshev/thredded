@@ -4,8 +4,17 @@ module Thredded
   module UserExtender
     extend ActiveSupport::Concern
 
-    include ::Thredded::UserPermissions::Read::All
-    include ::Thredded::UserPermissions::Write::All
+    # Under normal conditions - any user has read and write permissions.
+    # In multitenant systems, only users who are associated with forums
+    #   through ForumUser model have read and write permissions.
+    if Thredded.multitenant
+      include ::Thredded::UserPermissions::Read::ForumUsers
+      # include ::Thredded::UserPermissions::Write::ForumUsers
+    else
+      include ::Thredded::UserPermissions::Read::All
+      include ::Thredded::UserPermissions::Write::All
+    end
+
     include ::Thredded::UserPermissions::Message::ReadersOfWriteableBoards
     include ::Thredded::UserPermissions::Moderate::IfModeratorColumnTrue
     include ::Thredded::UserPermissions::Admin::IfAdminColumnTrue
