@@ -26,7 +26,7 @@ module Thredded
     end
 
     def create?
-      @user.thredded_admin? ||
+      thredded_admin? ||
         !@post.postable.locked? &&
           # Users are allowed to post in unlocked topics of a locked messageboard
           # only if they would be allowed to post if the messageboard wasn't locked.
@@ -38,7 +38,7 @@ module Thredded
     end
 
     def update?
-      @user.thredded_admin? || own_post? || messageboard_policy.moderate?
+      thredded_admin? || own_post? || messageboard_policy.moderate?
     end
 
     def destroy?
@@ -59,6 +59,12 @@ module Thredded
 
     def own_post?
       !anonymous? && @user.id == @post.user_id
+    end
+
+    private
+
+    def thredded_admin?
+      Thredded.multitenant ? @user.thredded_admin?(@post.messageboard.forum) : @user.thredded_admin?
     end
   end
 end

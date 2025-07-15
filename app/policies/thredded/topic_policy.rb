@@ -35,15 +35,21 @@ module Thredded
     end
 
     def update?
-      @user.thredded_admin? || @topic.user_id == @user.id || moderate?
+      thredded_admin? || @topic.user_id == @user.id || moderate?
     end
 
     def destroy?
-      @user.thredded_admin?
+      thredded_admin?
     end
 
     def moderate?
       @messageboard_policy.moderate?
+    end
+
+    private
+
+    def thredded_admin?
+      Thredded.multitenant ? @user.thredded_admin?(@topic.messageboard.forum) : @user.thredded_admin?
     end
   end
 end

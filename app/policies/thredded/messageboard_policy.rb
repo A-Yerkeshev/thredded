@@ -30,29 +30,35 @@ module Thredded
     end
 
     def create?
-      @user.thredded_admin?
+      thredded_admin?
     end
 
     def read?
-      @user.thredded_admin? || @user.thredded_can_read_messageboard?(@messageboard)
+      thredded_admin? || @user.thredded_can_read_messageboard?(@messageboard)
     end
 
     def update?
-      @user.thredded_admin?
+      thredded_admin?
     end
 
     def destroy?
-      @user.thredded_admin?
+      thredded_admin?
     end
 
     def post?
-      @user.thredded_admin? ||
+      thredded_admin? ||
         (!@messageboard.locked? || moderate?) &&
           @user.thredded_can_write_messageboards.include?(@messageboard)
     end
 
     def moderate?
-      @user.thredded_admin? || @user.thredded_can_moderate_messageboard?(@messageboard)
+      thredded_admin? || @user.thredded_can_moderate_messageboard?(@messageboard)
+    end
+
+    private
+
+    def thredded_admin?
+      Thredded.multitenant ? @user.thredded_admin?(@messageboard.forum) : @user.thredded_admin?
     end
   end
 end

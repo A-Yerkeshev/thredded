@@ -10,7 +10,13 @@ module Thredded
     end
 
     def create?
-      @user.thredded_admin?
+      thredded_admin?
+    end
+
+    private
+
+    def thredded_admin?
+      Thredded.multitenant ? @user.thredded_admin?(@group.forum) : @user.thredded_admin?
     end
   end
 end
