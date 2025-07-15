@@ -67,7 +67,6 @@ module Thredded
     # @return [String] html_safe datetime presentation
     def time_ago(datetime, default: '-', html_options: {})
       return content_tag :time, default if datetime.nil?
-      datetime = datetime.localtime
       html_options = html_options.dup
       is_current_year = datetime.year == Time.current.year
       if datetime > 4.days.ago
