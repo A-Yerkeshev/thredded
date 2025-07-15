@@ -4,20 +4,19 @@ module Thredded
   module UserExtender
     extend ActiveSupport::Concern
 
-    # Under normal conditions - any user has read and write permissions.
-    # In multitenant systems, only users who are associated with forums
-    #   through ForumUser model have read and write permissions.
-    if Thredded.multitenant
-      include ::Thredded::UserPermissions::Read::ForumUsers
-      include ::Thredded::UserPermissions::Write::ForumUsers
-    else
+    unless Thredded.multitenant
       include ::Thredded::UserPermissions::Read::All
       include ::Thredded::UserPermissions::Write::All
+      include ::Thredded::UserPermissions::Message::ReadersOfWriteableBoards
+      include ::Thredded::UserPermissions::Moderate::IfModeratorColumnTrue
+      include ::Thredded::UserPermissions::Admin::IfAdminColumnTrue
+    else
+      include ::Thredded::UserPermissions::Read::ForumUsers
+      include ::Thredded::UserPermissions::Write::ForumUsers
+      include ::Thredded::UserPermissions::Message::ReadersOfWriteableBoards
+      include ::Thredded::UserPermissions::Moderate::ForumModerators
+      include ::Thredded::UserPermissions::Admin::ForumAdministrators
     end
-
-    include ::Thredded::UserPermissions::Message::ReadersOfWriteableBoards
-    include ::Thredded::UserPermissions::Moderate::IfModeratorColumnTrue
-    include ::Thredded::UserPermissions::Admin::IfAdminColumnTrue
 
     included do # rubocop:disable Metrics/BlockLength
       with_options dependent: :nullify, foreign_key: 'user_id', inverse_of: :user do
