@@ -9,7 +9,7 @@ module Thredded
     #   through ForumUser model have read and write permissions.
     if Thredded.multitenant
       include ::Thredded::UserPermissions::Read::ForumUsers
-      # include ::Thredded::UserPermissions::Write::ForumUsers
+      include ::Thredded::UserPermissions::Write::ForumUsers
     else
       include ::Thredded::UserPermissions::Read::All
       include ::Thredded::UserPermissions::Write::All
