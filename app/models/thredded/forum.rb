@@ -20,6 +20,10 @@ module Thredded
              foreign_key: :thredded_forum_id,
              dependent: :destroy
 
+    validates :name,
+              uniqueness: { case_sensitive: false },
+              length: { within: Thredded.forum_name_length_range }
+
     # Finds forum by ID, or raises {Thredded::Errors::ForumNotFound}.
     # @param id [String, Number]
     # @return [Thredded::Forum]

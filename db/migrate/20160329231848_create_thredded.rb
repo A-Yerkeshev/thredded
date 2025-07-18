@@ -40,6 +40,8 @@ class CreateThredded < Thredded::BaseMigration
                                             **(max_key_length ? { length: max_key_length } : {})
 
     create_table :thredded_forums do |t|
+      t.text :name
+      t.text :description
       t.timestamps null: false
     end
 
