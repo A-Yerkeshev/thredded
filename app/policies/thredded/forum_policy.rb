@@ -30,29 +30,27 @@ module Thredded
     end
 
     def create?
-      thredded_admin?
+      @user.thredded_admin?(@forum)
     end
 
     def read?
-      thredded_admin? || @user.thredded_can_read_forum?(@forum)
+      @user.thredded_admin?(@forum) || @user.thredded_can_read_forum?(@forum)
     end
 
     def update?
-      thredded_admin?
+      @user.thredded_admin?(@forum)
     end
 
     def destroy?
-      thredded_admin?
+      @user.thredded_admin?(@forum)
     end
 
     def moderate?
-      thredded_admin? || @user.thredded_can_moderate_forum?(@forum)
+      @user.thredded_admin?(@forum) || @user.thredded_can_moderate_forum?(@forum)
     end
 
-    private
-
-    def thredded_admin?
-      @user.thredded_admin?(@forum)
+    def post?
+      @user.thredded_admin?(@forum) || @user.thredded_can_write_forums.include?(@forum)
     end
   end
 end
