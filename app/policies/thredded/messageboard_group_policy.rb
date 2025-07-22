@@ -7,16 +7,11 @@ module Thredded
     def initialize(user, group)
       @user = user
       @group = group
+      @forum_policy = Thredded::ForumPolicy.new(user, group.forum) if Thredded.multitenant
     end
 
     def create?
-      thredded_admin?
-    end
-
-    private
-
-    def thredded_admin?
-      Thredded.multitenant ? @user.thredded_admin?(@group.forum) : @user.thredded_admin?
+      @forum_policy ? @forum_policy.post? : @user.thredded_admin?
     end
   end
 end

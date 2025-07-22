@@ -31,30 +31,30 @@ module Thredded
     end
 
     def create?
-      @forum_policy ? @forum_policy.create? : @user.thredded_admin?
+      @forum_policy ? @forum_policy.post? : thredded_admin?
     end
 
     def read?
       if @forum_policy
         @forum_policy.read?
       else
-        @user.thredded_admin? || @user.thredded_can_read_messageboard?(@messageboard)
+        thredded_admin? || @user.thredded_can_read_messageboard?(@messageboard)
       end
     end
 
     def update?
-      @forum_policy ? @forum_policy.update? : @user.thredded_admin?
+      thredded_admin?
     end
 
     def destroy?
-      @forum_policy ? @forum_policy.destroy? : @user.thredded_admin?
+      thredded_admin?
     end
 
     def post?
       if @forum_policy
         @forum_policy.post?
       else
-        @user.thredded_admin? ||
+        thredded_admin? ||
         (!@messageboard.locked? || moderate?) &&
           @user.thredded_can_write_messageboards.include?(@messageboard)
       end
@@ -64,8 +64,14 @@ module Thredded
       if @forum_policy
         @forum_policy.moderate?
       else
-        @user.thredded_admin? || @user.thredded_can_moderate_messageboard?(@messageboard)
+        thredded_admin? || @user.thredded_can_moderate_messageboard?(@messageboard)
       end
+    end
+
+    private
+
+    def thredded_admin?
+      Thredded.multitenant ? @user.thredded_admin?(@messageboard.forum) : @user.thredded_admin?
     end
   end
 end

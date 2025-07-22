@@ -46,11 +46,11 @@ module Thredded
     end
 
     def moderate?
-      @user.thredded_admin?(@forum) || @user.thredded_can_moderate_forum?(@forum)
+      !@forum.archived && (@user.thredded_admin?(@forum) || @user.thredded_can_moderate_forum?(@forum))
     end
 
     def post?
-      @user.thredded_admin?(@forum) || @user.thredded_can_write_forums.include?(@forum)
+      !@forum.archived && (@user.thredded_admin?(@forum) || @user.thredded_can_write_forums.include?(@forum))
     end
   end
 end

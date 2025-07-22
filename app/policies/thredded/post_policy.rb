@@ -61,8 +61,6 @@ module Thredded
       !anonymous? && @user.id == @post.user_id
     end
 
-    private
-
     def thredded_admin?
       Thredded.multitenant ? @user.thredded_admin?(@post.messageboard.forum) : @user.thredded_admin?
     end
