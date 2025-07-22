@@ -42,6 +42,7 @@ class CreateThredded < Thredded::BaseMigration
     create_table :thredded_forums do |t|
       t.text :name
       t.text :description
+      t.boolean :archived, null: false, default: false
       t.timestamps null: false
     end
 
