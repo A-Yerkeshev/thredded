@@ -22,7 +22,7 @@ module Thredded
 
     validates :name,
               uniqueness: { case_sensitive: false },
-              length: { within: Thredded.forum_name_length_range }
+              length: { maximum: Thredded.forum_name_max_length }
 
     # Finds forum by ID, or raises {Thredded::Errors::ForumNotFound}.
     # @param id [String, Number]

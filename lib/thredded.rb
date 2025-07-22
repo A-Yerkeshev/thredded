@@ -172,8 +172,8 @@ module Thredded # rubocop:disable Metrics/ModuleLength
     # @return [Range<Integer>] The range of valid topic title lengths.
     attr_accessor :topic_title_length_range
 
-    # @return [Range<Integer>] The range of valid forum name lengths.
-    attr_accessor :forum_name_length_range
+    # @return [Integer] The maximum length of valid forum name.
+    attr_accessor :forum_name_max_length
 
     # @return [Boolean] Whether there is more than one forum in the application.
     attr_accessor :multitenant
@@ -283,7 +283,7 @@ module Thredded # rubocop:disable Metrics/ModuleLength
 
   self.messageboard_name_length_range = (1..60)
   self.topic_title_length_range = (1..200)
-  self.forum_name_length_range = (1..60)
+  self.forum_name_max_length = 60
 
   self.multitenant = false
 end
