@@ -37,7 +37,7 @@ module Thredded
           # @param _forums [Array<Thredded::Forum>]
           # @return [ActiveRecord::Relation<Thredded.user_class>] users that can read the given forums
           def thredded_forums_readers(_forums)
-            _forums.flat_map { |forum| forum.forum_users.map(&:user_detail.user) }.uniq
+            _forums.flat_map { |forum| forum.forum_users.map(&:user_detail).map(&:user) }.uniq
           end
 
           # Users that can read some of the given messageboards.
@@ -46,7 +46,7 @@ module Thredded
           # @return [ActiveRecord::Relation<Thredded.user_class>] users that can read the given messageboards
           def thredded_messageboards_readers(_messageboards)
             forums = _messageboards.map(&:forum).uniq
-            forums.flat_map { |forum| forum.forum_users.map(&:user_detail.user) }.uniq
+            forums.flat_map { |forum| forum.forum_users.map(&:user_detail).map(&:user) }.uniq
           end
         end
       end
