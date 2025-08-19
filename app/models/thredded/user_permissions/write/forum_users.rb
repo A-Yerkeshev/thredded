@@ -10,7 +10,7 @@ module Thredded
         def thredded_can_write_forums
           Thredded::Forum
             .joins(:forum_users)
-            .where(thredded_forum_users: {user_detail_id: thredded_user_detail.id})
+            .where(thredded_forum_users: {thredded_user_detail_id: thredded_user_detail.id})
             .distinct
         end
 
