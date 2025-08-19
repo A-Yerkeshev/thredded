@@ -8,12 +8,15 @@ module Thredded
 
         # @return [ActiveRecord::Relation<Thredded::Forum>] forums that the user can post in
         def thredded_can_write_forums
-          Thredded::ForumUser.where(user_detail: thredded_user_detail).map(&:forum)
+          Thredded::Forum
+            .joins(:forum_users)
+            .where(thredded_forum_users: {user_detail_id: thredded_user_detail.id})
+            .distinct
         end
 
         # @return [ActiveRecord::Relation<Thredded::Messageboard>] messageboards that the user can post in
         def thredded_can_write_messageboards
-          thredded_can_write_forums.flat_map(&:messageboards)
+          Thredded::Messageboard.where(forum_id: thredded_can_write_forums.select(:id))
         end
       end
     end
