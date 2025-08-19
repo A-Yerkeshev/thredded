@@ -9,7 +9,10 @@ module Thredded
 
         # @return [ActiveRecord::Relation<Thredded::Forum>] forums that the user can read
         def thredded_can_read_forums
-          Thredded::ForumUser.where(user_detail: thredded_user_detail).map(&:forum)
+          Thredded::Forum
+            .joins(:forum_users)
+            .where(thredded_forum_users: { user_detail_id: thredded_user_detail.id })
+            .distinct
         end
 
         # @param [Thredded::Forum] forum
@@ -21,7 +24,7 @@ module Thredded
 
         # @return [ActiveRecord::Relation<Thredded::Messageboard>] messageboards that the user can read
         def thredded_can_read_messageboards
-          thredded_can_read_forums.flat_map(&:messageboards)
+          Thredded::Messageboard.where(forum_id: thredded_can_read_forums.select(:id))
         end
 
         # @param [Thredded::Messageboard] messageboard
@@ -37,7 +40,10 @@ module Thredded
           # @param _forums [Array<Thredded::Forum>]
           # @return [ActiveRecord::Relation<Thredded.user_class>] users that can read the given forums
           def thredded_forums_readers(_forums)
-            _forums.flat_map { |forum| forum.forum_users.map(&:user_detail).map(&:user) }.uniq
+            Thredded.user_class
+              .joins(thredded_user_detail: :forum_users)
+              .where(thredded_forum_users: {forum_id: _forums.map(&:id)})
+              .distinct
           end
 
           # Users that can read some of the given messageboards.
@@ -45,8 +51,12 @@ module Thredded
           # @param _messageboards [Array<Thredded::Messageboard>]
           # @return [ActiveRecord::Relation<Thredded.user_class>] users that can read the given messageboards
           def thredded_messageboards_readers(_messageboards)
-            forums = _messageboards.map(&:forum).uniq
-            forums.flat_map { |forum| forum.forum_users.map(&:user_detail).map(&:user) }.uniq
+            Thredded.user_class
+              .joins(thredded_user_detail: {forum_users: :forum})
+              .where(thredded_forums: {id: Thredded::Forum.joins(:messageboards)
+                                                          .where(thredded_messageboards: {id: _messageboards.map(&:id)})
+                                                          .select(:id)})
+              .distinct
           end
         end
       end
