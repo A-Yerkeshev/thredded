@@ -11,10 +11,11 @@ module Thredded
                dependent: :destroy,
                inverse_of: :forum_owner
 
-      # Returns array of owned forums
-      # @return [Array<Forum>]
+      # Returns collection of owned forums
+      # @return [ActiveRecord::Relation<Forum>]
       def forums
-        forum_ownerships.includes(:forum).map(&:forum)
+        Thredded::Forum.joins(:forum_ownerships)
+          .where(thredded_forum_ownerships: {forum_owner_id: id, forum_owner_type: self.class.name})
       end
     end
   end
