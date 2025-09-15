@@ -85,17 +85,17 @@ module Thredded
 
     def mock_messageboard(attr = {})
       fail 'Do not assign ID here or a has_many association might get updated' if attr.key?(:id)
-      Thredded::Messageboard.new(
-        attr.reverse_merge(
-          name:         'A test messageboard',
-          slug:         'a-test-messageboard',
-          description:  'Test messageboard description',
-          created_at:   1.month.ago,
-          posts_count:  rand(1337),
-          topics_count: rand(42),
-          updated_at:   Time.zone.now,
-        )
+      attrs = attr.reverse_merge(
+        name:         'A test messageboard',
+        slug:         'a-test-messageboard',
+        description:  'Test messageboard description',
+        created_at:   1.month.ago,
+        posts_count:  rand(1337),
+        topics_count: rand(42),
+        updated_at:   Time.zone.now,
       )
+      attrs[:forum] = mock_forum if Thredded.multitenant
+      Thredded::Messageboard.new(attrs)
     end
 
     def mock_user(attr = {})
@@ -104,6 +104,17 @@ module Thredded
         attr.reverse_merge(
           Thredded.user_name_column => name,
           email:                    "#{name.downcase}@test.com",
+        )
+      )
+    end
+
+    def mock_forum(attr = {})
+      Thredded::Forum.new(
+        attr.reverse_merge(
+          name:        'A test forum',
+          description: 'Test forum description',
+          created_at:  1.month.ago,
+          updated_at:  Time.zone.now,
         )
       )
     end
