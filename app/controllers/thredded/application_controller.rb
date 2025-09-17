@@ -33,7 +33,8 @@ module Thredded
                 Thredded::Errors::PrivatePostNotFound,
                 Thredded::Errors::TopicNotFound,
                 Thredded::Errors::PostNotFound,
-                Thredded::Errors::UserNotFound do |exception|
+                Thredded::Errors::UserNotFound,
+                Thredded::Errors::ForumNotFound do |exception|
       @error   = exception
       @message = exception.message
       render template: 'thredded/error_pages/not_found', status: :not_found
