@@ -42,14 +42,20 @@ de:
             Um keine weiteren E-Mails zu erhalten, ändern Sie hier ihre Benachrichtigungseinstellungen:
             %{unsubscribe_url}
     errors:
+      database_empty: Füllen Sie die Datenbank mit "rake db:seed"
       forum_not_found: Forum mit der angegebenen ID existiert nicht.
       login_required: Bitte zuerst anmelden
+      messageboard_create_denied: Sie sind nicht berechtigt, ein neues Messageboard zu erstellen.
+      messageboard_not_found: Dieses Messageboard existiert nicht.
+      messageboard_read_denied: Sie sind nicht berechtigt, auf dieses Messageboard zuzugreifen.
       not_authorized: Du hast keinen Zugriff auf diese Seite
       post_not_found: Dieser Beitrag existiert nicht.
       private_post_not_found: Diese private Nachricht existiert nicht.
       private_topic_create_denied: Du bist nicht autorisiert, private Unterhaltungen zu erstellen
       private_topic_not_found: Diese private Unterhaltung existiert nicht
+      topic_create_denied: Sie sind nicht berechtigt, in diesem Messageboard zu posten.
       topic_not_found: Dieses Thema existiert nicht.
+      user_not_found: Dieser Benutzer konnte nicht gefunden werden. Ist der Name eventuell falsch geschrieben?
     form:
       create_btn_submitting: Erstellen...
       preview: Vorschau

@@ -7,7 +7,7 @@ module Thredded
   module Errors
     class DatabaseEmpty < Thredded::Error
       def message
-        'Seed the database with "rake db:seed".'
+        I18n.t('thredded.errors.database_empty')
       end
     end
 
@@ -19,7 +19,7 @@ module Thredded
 
     class UserNotFound < Thredded::Error
       def message
-        'This user could not be found. Is their name misspelled?'
+        I18n.t('thredded.errors.user_not_found')
       end
     end
 
@@ -49,25 +49,25 @@ module Thredded
 
     class MessageboardNotFound < Thredded::Error
       def message
-        'This messageboard does not exist.'
+        I18n.t('thredded.errors.messageboard_not_found')
       end
     end
 
     class MessageboardReadDenied < Thredded::Error
       def message
-        'You are not authorized access to this messageboard.'
+        I18n.t('thredded.errors.messageboard_read_denied')
       end
     end
 
     class MessageboardCreateDenied < Thredded::Error
       def message
-        'You are not authorized to create a new messageboard.'
+        I18n.t('thredded.errors.messageboard_create_denied')
       end
     end
 
     class TopicCreateDenied < Thredded::Error
       def message
-        'You are not authorized to post in this messageboard.'
+        I18n.t('thredded.errors.topic_create_denied')
       end
     end
 

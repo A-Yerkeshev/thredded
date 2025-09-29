@@ -41,14 +41,20 @@ pl:
             Aby wypisać się z tych e-maili, zaktualizuj swoje preferencje:
             %{unsubscribe_url}
     errors:
+      database_empty: Wypełnij bazę danych poleceniem "rake db:seed"
       forum_not_found: Forum o podanym identyfikatorze nie istnieje.
       login_required: Proszę się najpierw zalogować.
+      messageboard_create_denied: Nie masz uprawnień do tworzenia nowego forum.
+      messageboard_not_found: To forum nie istnieje.
+      messageboard_read_denied: Nie masz uprawnień do przeglądania tego forum.
       not_authorized: Nie masz uprawnień aby zobaczyć tę stronę.
       post_not_found: Ten wpis nie istnieje.
       private_post_not_found: Ta prywatna wiadomość nie istnieje.
       private_topic_create_denied: Nie masz uprawnień do tworzenia prywatnych tematów.
       private_topic_not_found: Ten prywatny temat nie istnieje.
+      topic_create_denied: Nie masz uprawnień do publikowania na tym forum.
       topic_not_found: Ten temat nie istnieje.
+      user_not_found: Nie można znaleźć tego użytkownika. Czy imię jest poprawnie zapisane?
     form:
       create_btn_submitting: Tworzenie...
       preview: Zapowiedź
