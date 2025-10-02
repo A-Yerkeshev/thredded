@@ -136,6 +136,7 @@ en:
       settings: Notification Settings
       sign_in: Sign In / Register
       sign_out: Sign Out
+      topics: Topics
       unread_topics: Unread
     null_user_name: Deleted user
     posts:
