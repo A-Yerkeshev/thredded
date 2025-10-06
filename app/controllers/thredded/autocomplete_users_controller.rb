@@ -48,7 +48,11 @@ module Thredded
     end
 
     def users_scope
-      thredded_current_user.thredded_can_message_users
+      if Thredded.multitenant
+        thredded_current_user.thredded_can_message_users(@forum)
+      else
+        thredded_current_user.thredded_can_message_users
+      end
     end
   end
 end

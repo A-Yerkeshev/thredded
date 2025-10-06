@@ -13,7 +13,7 @@ module Thredded
     else
       include ::Thredded::UserPermissions::Read::ForumUsers
       include ::Thredded::UserPermissions::Write::ForumUsers
-      include ::Thredded::UserPermissions::Message::ReadersOfWriteableBoards
+      include ::Thredded::UserPermissions::Message::ForumUsers
       include ::Thredded::UserPermissions::Moderate::ForumModerators
       include ::Thredded::UserPermissions::Admin::ForumAdministrators
     end
