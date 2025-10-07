@@ -104,6 +104,7 @@ class CreateThredded < Thredded::BaseMigration
     create_table :thredded_private_topics do |t|
       t.references :user, type: user_id_type, index: false
       t.references :last_user, type: user_id_type, index: false
+      t.references :forum, index: false
       t.text :title, null: false
       t.text :slug, null: false
       t.integer :posts_count, default: 0
@@ -112,6 +113,7 @@ class CreateThredded < Thredded::BaseMigration
       t.timestamps null: false
       t.index [:last_post_at], name: :index_thredded_private_topics_on_last_post_at
       t.index [:hash_id], name: :index_thredded_private_topics_on_hash_id
+      t.index [:forum_id], name: :index_thredded_private_topics_on_forum_id
       t.index [:slug],
               name: :index_thredded_private_topics_on_slug,
               unique: true,
