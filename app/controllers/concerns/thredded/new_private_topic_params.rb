@@ -6,12 +6,14 @@ module Thredded
     protected
 
     def new_private_topic_params
+      permitted_attrs = [:title, :content, :user_names, {user_ids: []}]
+      permitted_attrs << :forum_id if Thredded.multitenant
+
       params
         .fetch(:private_topic, {})
-        .permit(:title, :content, :user_names, user_ids: [])
-        .merge(
-          user: thredded_current_user,
-        ).tap { |p| adapt_user_ids! p }
+        .tap { |p| adapt_user_ids! p }
+        .permit(*permitted_attrs)
+        .merge(user: thredded_current_user)
     end
 
     private

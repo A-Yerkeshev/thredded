@@ -26,7 +26,7 @@ module Thredded
     end
 
     def create?
-      @user.thredded_admin? || @post.postable.users.include?(@user) && !@user.thredded_user_detail.blocked?
+      thredded_admin? || @post.postable.users.include?(@user) && !@user.thredded_user_detail.blocked?
     end
 
     def read?
@@ -34,7 +34,7 @@ module Thredded
     end
 
     def update?
-      @user.thredded_admin? || own_post?
+      thredded_admin? || own_post?
     end
 
     def destroy?
@@ -49,6 +49,10 @@ module Thredded
 
     def own_post?
       @user.id == @post.user_id
+    end
+
+    def thredded_admin?
+      Thredded.multitenant ? @user.thredded_admin?(@post.postable.forum) : @user.thredded_admin?
     end
   end
 end

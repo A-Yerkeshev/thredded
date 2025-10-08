@@ -45,6 +45,11 @@ module Thredded
              inverse_of: :postable,
              dependent: :delete_all
 
+    if Thredded.multitenant
+      belongs_to :forum, inverse_of: :private_topics
+      validates :forum_id, presence: true
+    end
+
     # Private topics with that have exactly the given participants.
     scope :has_exact_participants, ->(users) {
       private_users = Thredded::PrivateUser.arel_table

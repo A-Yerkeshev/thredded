@@ -31,6 +31,10 @@
                content_label: t('thredded.private_topics.form.content_label'),
                preview_url: private_topic.preview_path %>
 
+    <% if Thredded.multitenant %>
+      <%= form.hidden_field :forum_id, value: @forum.id %>
+    <% end %>
+
     <li>
       <button type="submit" class="thredded--form--submit"
               data-disable-with="<%= t 'thredded.private_topics.form.create_btn_submitting' %>">

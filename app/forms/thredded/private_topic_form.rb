@@ -14,7 +14,8 @@ module Thredded
       :user_ids,
       :locked,
       :sticky,
-      :content
+      :content,
+      :forum_id
 
     attr_reader :user, :params
     attr_writer :user_names
@@ -31,6 +32,7 @@ module Thredded
       @sticky = params[:sticky]
       @content = params[:content]
       @user_names = params[:user_names]
+      @forum_id = params[:forum_id] if Thredded.multitenant
     end
 
     def self.model_name
@@ -53,12 +55,15 @@ module Thredded
     end
 
     def private_topic
-      @private_topic ||= Thredded::PrivateTopic.new(
+      attrs = {
         title: title,
         users: private_users,
         user: non_null_user,
         last_user: non_null_user
-      )
+      }
+      attrs[:forum_id] = forum_id if Thredded.multitenant
+
+      @private_topic ||= Thredded::PrivateTopic.new(attrs)
     end
 
     def post
