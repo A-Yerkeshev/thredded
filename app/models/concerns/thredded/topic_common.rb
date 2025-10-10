@@ -42,6 +42,10 @@ module Thredded
       !public?
     end
 
+    def unread?(user)
+      self.class.unread(user).exists?(self.id)
+    end
+
     private
 
     def ensure_user_detail
