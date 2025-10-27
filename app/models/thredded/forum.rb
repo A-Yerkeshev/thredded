@@ -24,7 +24,6 @@ module Thredded
              dependent: :destroy
 
     validates :name,
-              uniqueness: { case_sensitive: false },
               length: { maximum: Thredded.forum_name_max_length }
 
     # Finds forum by ID, or raises {Thredded::Errors::ForumNotFound}.
