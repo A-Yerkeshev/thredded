@@ -8,9 +8,9 @@ module Thredded
     before_action :thredded_require_login!
 
     def index
-      page_scope = Thredded::PrivateTopic
-        .distinct
-        .for_user(thredded_current_user)
+      page_scope = Thredded::PrivateTopic.distinct
+      page_scope = page_scope.where(forum: @forum) if Thredded.multitenant
+      page_scope = page_scope.for_user(thredded_current_user)
         .order_recently_posted_first
         .send(Kaminari.config.page_method_name, params[:page])
       return redirect_to(last_page_params(page_scope)) if page_beyond_last?(page_scope)
