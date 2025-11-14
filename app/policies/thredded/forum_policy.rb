@@ -38,7 +38,7 @@ module Thredded
     end
 
     def update?
-      @user.thredded_admin?(@forum)
+      @user.thredded_admin?(@forum) && !@forum.archived
     end
 
     def destroy?
@@ -46,11 +46,11 @@ module Thredded
     end
 
     def moderate?
-      !@forum.archived && (@user.thredded_admin?(@forum) || @user.thredded_can_moderate_forum?(@forum))
+      (@user.thredded_admin?(@forum) || @user.thredded_can_moderate_forum?(@forum)) && !@forum.archived
     end
 
     def post?
-      !@forum.archived && (@user.thredded_admin?(@forum) || @user.thredded_can_write_forums.include?(@forum))
+      (@user.thredded_admin?(@forum) || @user.thredded_can_write_forums.include?(@forum)) && !@forum.archived
     end
   end
 end

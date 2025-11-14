@@ -35,11 +35,8 @@ module Thredded
     end
 
     def read?
-      if @forum_policy
-        @forum_policy.read?
-      else
-        thredded_admin? || @user.thredded_can_read_messageboard?(@messageboard)
-      end
+      return false if @forum_policy && !@forum_policy.read?
+      thredded_admin? || @user.thredded_can_read_messageboard?(@messageboard)
     end
 
     def update?
@@ -51,13 +48,8 @@ module Thredded
     end
 
     def post?
-      if @forum_policy
-        @forum_policy.post?
-      else
-        thredded_admin? ||
-        (!@messageboard.locked? || moderate?) &&
-          @user.thredded_can_write_messageboards.include?(@messageboard)
-      end
+      return false if @forum_policy && !@forum_policy.post?
+      thredded_admin? || (!@messageboard.locked? || moderate?) && @user.thredded_can_write_messageboards.include?(@messageboard)
     end
 
     def moderate?
