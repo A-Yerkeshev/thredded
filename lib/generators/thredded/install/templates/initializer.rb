@@ -50,9 +50,6 @@ Thredded.content_visible_while_pending_moderation = true
 # Whether there is more than one forum in the application.
 # Thredded.multitenant = true
 
-# Whether read access requires authentication.
-# Thredded.authentication_required = true
-
 # ==> UI configuration
 
 # How to calculate the position of messageboards in a list:

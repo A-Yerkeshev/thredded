@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'byebug'
-
 Dummy::Application.configure do
   config.eager_load = false
 

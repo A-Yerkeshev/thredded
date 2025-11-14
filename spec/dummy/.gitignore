@@ -5,4 +5,3 @@
 yarn-debug.log*
 .yarn-integrity
 yarn.lock
-.byebug_history

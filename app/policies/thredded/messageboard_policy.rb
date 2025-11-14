@@ -53,11 +53,8 @@ module Thredded
     end
 
     def moderate?
-      if @forum_policy
-        @forum_policy.moderate?
-      else
-        thredded_admin? || @user.thredded_can_moderate_messageboard?(@messageboard)
-      end
+      return false if @forum_policy && !@forum_policy.moderate?
+      thredded_admin? || @user.thredded_can_moderate_messageboard?(@messageboard)
     end
 
     private
