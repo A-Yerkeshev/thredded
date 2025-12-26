@@ -1,5 +1,4 @@
-//= require rails-ujs
-//= require turbolinks
+//= require turbo
 //= require thredded/dependencies/timeago
 //= require timeago/locales/de
 //= require timeago/locales/es
@@ -9,4 +8,3 @@
 //= require timeago/locales/pt_BR
 //= require timeago/locales/ru
 //= require thredded
-//= require_tree ./app

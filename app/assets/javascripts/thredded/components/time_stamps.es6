@@ -11,7 +11,7 @@
         document.querySelectorAll(COMPONENT_SELECTOR),
         threddedContainer.getAttribute('data-thredded-locale').replace('-', '_'));
     });
-    document.addEventListener('turbolinks:before-cache', () => {
+    document.addEventListener('turbo:before-cache', () => {
       timeago.cancel();
     });
   } else if ('jQuery' in window && 'timeago' in jQuery.fn) {

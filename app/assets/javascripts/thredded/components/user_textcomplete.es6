@@ -42,7 +42,7 @@
     }
   };
 
-  document.addEventListener('turbolinks:before-cache', () => {
+  document.addEventListener('turbo:before-cache', () => {
     Array.prototype.forEach.call(
       document.getElementsByClassName(Thredded.UserTextcomplete.DROPDOWN_CLASS_NAME), (node) => {
         node.parentNode.removeChild(node);

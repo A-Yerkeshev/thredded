@@ -1,5 +1,4 @@
 //= require thredded/dependencies/timeago
-//= require thredded/dependencies/ujs
 //= require thredded/dependencies/autosize
 //= require thredded/dependencies/textcomplete
 

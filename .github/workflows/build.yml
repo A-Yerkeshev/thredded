@@ -6,6 +6,12 @@ on:
     - main
   pull_request:
 
+# Explicit permissions following security best practices (principle of least privilege)
+permissions:
+  contents: read
+  pull-requests: read
+  checks: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -13,6 +19,7 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 60  # Prevent stuck jobs
 
     services:
       postgresql:
@@ -48,7 +55,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: ["14"]
+        node: ["22"]
         rails_version: ["7.0", "7.1", "7.2", "8.0"]
         db: [sqlite3, postgresql, mysql2]
         include:
@@ -60,7 +67,7 @@ jobs:
           - rails_version: 7.2
             ruby: 3.2
           - rails_version: 8.0
-            ruby: 3.3
+            ruby: 3.4
 
     env:
       RAILS_ENV: test
@@ -72,24 +79,47 @@ jobs:
       DB_POOL: 5
       DB_USERNAME: thredded
       DB_PASSWORD: thredded
+      NODE_OPTIONS: --openssl-legacy-provider
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v6
 
-    - uses: ruby/setup-ruby@v1
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true # install gems and cache
 
-    - uses: browser-actions/setup-chrome@v1
+    - name: Set up Chrome
+      uses: browser-actions/setup-chrome@v2
 
-    - uses: actions/setup-node@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node }}
 
+    - name: Restore Yarn cache
+      uses: actions/cache/restore@v4
+      id: restore-yarn-cache
+      with:
+        path: |
+          spec/dummy/node_modules
+        key: yarn-${{ runner.os }}-${{ hashFiles('spec/dummy/yarn.lock') }}
+        restore-keys: |
+          yarn-${{ runner.os }}-
+
     - name: Install Node Packages via Yarn
-      run: |
-        cd spec/dummy && yarn && cd -
+      working-directory: spec/dummy
+      run: yarn install --frozen-lockfile
+
+    - name: Save Yarn cache
+      uses: actions/cache/save@v4
+      if: steps.restore-yarn-cache.outputs.cache-hit != 'true'
+      with:
+        path: |
+          spec/dummy/node_modules
+        key: yarn-${{ runner.os }}-${{ hashFiles('spec/dummy/yarn.lock') }}
 
     - name: Restore Onebox Data and Views Cache
       uses: actions/cache/restore@v4
@@ -100,17 +130,37 @@ jobs:
           tmp/cache/onebox-views
           spec/dummy/tmp/cache/onebox-data
           spec/dummy/tmp/cache/onebox-views
-        key: onebox-data-and-views
+        key: onebox-data-and-views-${{ runner.os }}-${{ github.sha }}
+        restore-keys: |
+          onebox-data-and-views-${{ runner.os }}-
+
+    - name: Restore compiled assets cache
+      uses: actions/cache/restore@v4
+      id: restore-assets-cache
+      if: matrix.db == 'sqlite3'
+      with:
+        path: |
+          spec/dummy/public/assets
+          spec/dummy/tmp/cache/assets
+        key: assets-${{ matrix.rails_version }}-${{ hashFiles('spec/dummy/app/assets/**/*', 'spec/dummy/app/javascript/**/*') }}
+        restore-keys: |
+          assets-${{ matrix.rails_version }}-
 
     - name: "Check that assets:precompile works (sqlite3 only)"
+      if: matrix.db == 'sqlite3' && steps.restore-assets-cache.outputs.cache-hit != 'true'
+      working-directory: spec/dummy
       run: |
-        if [ "$DB" = "sqlite3" ]; then
-          cd spec/dummy
-          export PRECOMPILE_ASSETS=1
-          bundle exec rails assets:precompile
-          # clean up
-          bundle exec rails assets:clobber
-        fi
+        export PRECOMPILE_ASSETS=1
+        bundle exec rails assets:precompile
+
+    - name: Save compiled assets cache
+      uses: actions/cache/save@v4
+      if: matrix.db == 'sqlite3' && steps.restore-assets-cache.outputs.cache-hit != 'true'
+      with:
+        path: |
+          spec/dummy/public/assets
+          spec/dummy/tmp/cache/assets
+        key: assets-${{ matrix.rails_version }}-${{ hashFiles('spec/dummy/app/assets/**/*', 'spec/dummy/app/javascript/**/*') }}
 
     - name: "Run Tests: test:nojs"
       run: |
@@ -137,8 +187,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: capybara-rails${{ matrix.rails_version }}-ruby${{ matrix.ruby }}-${{ matrix.db }}
-        path: /home/runner/work/thredded/thredded/spec/dummy/tmp/capybara/
+        path: spec/dummy/tmp/capybara/
         retention-days: 7
+        if-no-files-found: ignore
 
     # - name: Test & publish code coverage
     #   uses: paambaati/codeclimate-action@v8.0.0
@@ -147,27 +198,30 @@ jobs:
 
     - name: Cache Onebox Data and Views Cache
       uses: actions/cache/save@v4
-      id: cache-onebox-data-and-views
+      if: steps.restore-onebox-data-and-views.outputs.cache-hit != 'true'
       with:
         path: |
           tmp/cache/onebox-data
           tmp/cache/onebox-views
           spec/dummy/tmp/cache/onebox-data
           spec/dummy/tmp/cache/onebox-views
-        key: ${{ steps.restore-onebox-data-and-views.outputs.cache-primary-key }}
+        key: onebox-data-and-views-${{ runner.os }}-${{ github.sha }}
 
   rubocop:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     env:
       BUNDLE_GEMFILE: spec/gemfiles/rubocop.gemfile
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v6
 
-    - uses: ruby/setup-ruby@v1
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.1
+        ruby-version: 3.4
         bundler-cache: true
 
     - name: Rubocop
@@ -176,16 +230,19 @@ jobs:
 
   i18n-tasks:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     env:
       BUNDLE_GEMFILE: spec/gemfiles/i18n-tasks.gemfile
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v6
 
-    - uses: ruby/setup-ruby@v1
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.1
+        ruby-version: 3.4
         bundler-cache: true
 
     - name: i18n health

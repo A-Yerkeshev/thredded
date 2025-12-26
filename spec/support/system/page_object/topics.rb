@@ -55,11 +55,20 @@ module PageObject
     end
 
     def visit_latest_topic
-      visit latest_topic_path
+      link = find('.thredded--topics--title a', text: topic_title)
+      link.click
     end
 
     def latest_topic_path
-      messageboard_topic_path(messageboard, Thredded::Topic.last)
+      # Extract topic from current path - used when we're already on the topic page
+      # (e.g., after redirect with next_page=topic)
+      # Path format: /messageboards/:messageboard_id/:topic_slug_or_id
+      messageboard_slug = messageboard.slug
+      topic_slug_or_id = current_path[%r{/#{Regexp.escape(messageboard_slug)}/([^/?]+)}, 1]
+      fail "Could not extract topic slug/ID from current path: #{current_path}" unless topic_slug_or_id
+
+      topic = Thredded::Topic.friendly_find!(topic_slug_or_id)
+      messageboard_topic_path(messageboard, topic)
     end
 
     def visit_topic_edit
@@ -67,7 +76,9 @@ module PageObject
     end
 
     def listed?
-      has_css?('a', text: topic_title)
+      # Use a more specific selector to find the topic link in the topics list
+      # This ensures we're looking in the right place and waits for the element to appear
+      has_css?('.thredded--topics--title a', text: topic_title)
     end
 
     def displayed?

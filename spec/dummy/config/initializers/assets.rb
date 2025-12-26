@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+Rails.application.config.assets.precompile += %w[email.css day.css night.css favicon.ico]
 if Gem::Version.new(Sprockets::VERSION) < Gem::Version.new('4')
   Rails.application.config.assets.precompile += %w[manifest.js]
 end

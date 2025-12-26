@@ -5,6 +5,9 @@
 
 # Unreleased (plans for 1.3.0)
 
+* Remove the remaining Rails UJS integration in favor of Turbo-powered helpers.
+* Migrate from Turbolinks to Hotwire Turbo
+* Drop rails_ujs requirement
 * Drop rails 7.0 (and probably 7.1)
 
 See the full list of changes here: https://github.com/thredded/thredded/compare/v1.2.0...main
@@ -38,7 +41,7 @@ See the full list of changes here: https://github.com/thredded/thredded/compare/
 
 * ContentFormatter.whitelist is now deprecated in favour of ContentFormatter.allowlist. Will be removed in v2.0
 * Support more recent versions of html-pipeline gem
-* Fixes for issues with viewing moderation history with ruby 3.0 or rails 7.0 
+* Fixes for issues with viewing moderation history with ruby 3.0 or rails 7.0
 * Drop support for Rails < 5.2
 
 See the full list of changes here: https://github.com/thredded/thredded/compare/v1.0.0...v1.0.1
@@ -972,7 +975,7 @@ See in particular "main app delegator" in Changed below.
 ## Changed
 
 * Thredded now loads jQuery v3 by default. If you load jQuery v1 or v2 in your app, you will need to tell Thredded to
-  load the same version. [#469](https://github.com/thredded/thredded/pull/469) 
+  load the same version. [#469](https://github.com/thredded/thredded/pull/469)
 * BBCode support is no longer enabled by default and is now available via
   the [thredded-bbcode](https://github.com/thredded/thredded-bbcode) gem.
   [#460](https://github.com/thredded/thredded/issues/460)

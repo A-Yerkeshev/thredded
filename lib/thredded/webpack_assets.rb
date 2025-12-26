@@ -100,8 +100,6 @@ module Thredded
           path = File.join(Gem.loaded_specs['timeago_js'].full_gem_path, 'assets', 'javascripts', "#{dep}.js")
           fail "Failed to find #{dep}" unless File.file?(path)
           return path
-        elsif dep == 'rails-ujs'
-          return '@rails/ujs'
         end
         engine_dep_to_path(dep)
       end

@@ -53,4 +53,4 @@ gem 'twemoji'
 gem 'web-console'
 
 # dummy app frontend
-gem 'turbolinks'
+gem 'turbo-rails'

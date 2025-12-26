@@ -39,7 +39,7 @@
         <%= button_to t('thredded.topics.delete_topic'), topic.destroy_path, method: :delete,
                       form_class: 'thredded--topic-delete-form',
                       class: 'thredded--button',
-                      'data-confirm' => t('thredded.topics.delete_confirm') %>
+                      'data-turbo-confirm' => t('thredded.topics.delete_confirm') %>
       </div>
     <% end %>
   <% end %>

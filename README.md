@@ -263,23 +263,11 @@ Finally, add the following to your `app/javascript/packs/application.js`:
 require('thredded_imports.js');
 ```
 
-Note that you must use `require` (not `import`) because Thredded JavaScript must be run after UJS/Turbolink `start()`
+Note that you must use `require` (not `import`) because Thredded JavaScript must be run after Turbo is started.
 has been called. This is because Webpack places `import` calls before the code in the same file (unlike `require`,
 which are placed in the same order as in the source).
 
 ##### Alternative JavaScript dependencies
-
-<details><summary><b>Rails UJS version</b></summary>
-
-By default, thredded loads `rails-ujs`.
-
-If you'd like it to use `jquery_ujs` instead, run this command from your app directory:
-
-```bash
-mkdir -p app/assets/javascripts/thredded/dependencies/
-printf '//= require jquery3\n//= require jquery_ujs\n' > app/assets/javascripts/thredded/dependencies/ujs.js
-```
-</details>
 
 <details><summary><b>Timeago version</b></summary>
 
@@ -733,12 +721,7 @@ Currently, Thredded JavaScript is written in the subset of ES6 that does not
 require Babel polyfills. We're waiting for the ES6/7 support on Rails to improve
 before updating this to full Babel.
 
-All Thredded JavaScript is compatible with the following Turbolinks options:
-
-* No Turbolinks.
-* Turbolinks 5.
-* Turbolinks Classic.
-* Turbolinks Classic + jquery-turbolinks.
+All Thredded JavaScript is compatible with the Hotwire Turbo
 
 Thredded JavaScript is also compatible with being loaded from script elements with
 `[async]` and/or `[defer]` attributes.
@@ -755,16 +738,16 @@ window.Thredded.onPageLoad(() => {
 
 Additionally, all the thredded views must be wrapped in a `<%= thredded_page do %>` block.
 
-On Turbolinks 5 onPageLoad will run on the same DOM when the page is restored
-from history (because Turbolinks 5 caches a *clone* of the body node, so
-the events are lost).
+When Hotwire Turbo restores a page from its cache, `Thredded.onPageLoad` runs
+again on a cloned copy of the DOM (Turbo caches a *clone* of `<body>`, so any
+listeners attached to real nodes are lost).
 
 This means that all DOM modifications on `window.Thredded.onPageLoad` must be
-idempotent, or they must be reverted on the `turbolinks:before-cache` event,
+idempotent, or they must be reverted on the `turbo:before-cache` event,
 e.g.:
 
 ```js
-document.addEventListener('turbolinks:before-cache', () => {
+document.addEventListener('turbo:before-cache', () => {
   // Destroy widgets
   autosize.destroy('textarea');
 });
